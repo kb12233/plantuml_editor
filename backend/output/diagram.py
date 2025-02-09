@@ -1,9 +1,13 @@
-class Animal:
+class Station:
     def __init__(self):
-        self.age = None;
-        self.species = None;
+        self.int = None;
         pass;
-    def makeSound():
+
+
+
+class StationCrossing:
+    def __init__(self):
+        self.TimeInterval = None;
         pass;
 
 

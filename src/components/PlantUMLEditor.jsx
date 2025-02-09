@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import plantumlEncoder from "plantuml-encoder";
+import UploadImageSection from "./upload_image_section"; // Import the UploadImageSection component
 
 const PlantUMLEditor = () => {
   const [markdown, setMarkdown] = useState(`@startuml\nAlice -> Bob: Hello\n@enduml`);
@@ -11,7 +12,7 @@ const PlantUMLEditor = () => {
 
   // List of supported languages by PlantCode
   const supportedLanguages = [
-    "coffeescript", "csharp", "ecmascript5", "ecmascript6",
+    "coffeescript", "csharp", "ecmascript5", "ecmascript6", 
     "java", "php", "python", "ruby", "typescript",
     "swift", "kotlin"
   ];
@@ -57,6 +58,7 @@ const PlantUMLEditor = () => {
   return (
     <div className="flex flex-col space-y-4 p-4">
       {/* Markdown Editor */}
+      <div><UploadImageSection/></div>
       <div>
         <h2 className="text-lg font-semibold">PlantUML Editor</h2>
         <MDEditor
