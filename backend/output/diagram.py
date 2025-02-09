@@ -1,12 +1,9 @@
-class SimplePlantUMLPlugin:
+class Animal:
     def __init__(self):
-        self.attrName = None;
-        self.anotherAttr = None;
-        self.ashleymoriah = None;
+        self.age = None;
+        self.species = None;
         pass;
-    def transform(syntaxTree):
-        pass;
-    def methodName(Karl):
+    def makeSound():
         pass;
 
 
