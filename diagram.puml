@@ -1,0 +1,8 @@
+@startuml
+class SimplePlantUMLPlugin {
+    + String attrName
+    + AnotherDataType anotherAttr 
+    + AST transform(AST syntaxTree)
+    + String methodName(String Karl)
+}
+@enduml

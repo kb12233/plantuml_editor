@@ -1,0 +1,12 @@
+class SimplePlantUMLPlugin {
+  private String attrName;
+  private AnotherDataType anotherAttr;
+  public AST transform(AST syntaxTree) {
+      return null;
+  }
+  public String methodName(String Karl) {
+      return null;
+  }
+}
+
+
