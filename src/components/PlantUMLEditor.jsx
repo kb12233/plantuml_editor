@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import plantumlEncoder from "plantuml-encoder";
+import UploadImageSection from "./upload_image_section"; // Import the UploadImageSection component
 
 const PlantUMLEditor = () => {
   const [markdown, setMarkdown] = useState(`@startuml\nAlice -> Bob: Hello\n@enduml`);
@@ -11,17 +12,22 @@ const PlantUMLEditor = () => {
 
   // List of supported languages by PlantCode
   const supportedLanguages = [
-    "coffeescript", "csharp", "ecmascript5", "ecmascript6",
+    "coffeescript", "csharp", "ecmascript5", "ecmascript6", 
     "java", "php", "python", "ruby", "typescript",
     "swift", "kotlin"
   ];
 
+  // Handle PlantUML generated from the uploaded image
+  const handlePlantUMLGenerated = (plantUML) => {
+    setMarkdown(plantUML);
+    generatePlantUML(plantUML);
+  };
+
   // Function to generate the PlantUML diagram preview
-  const generatePlantUML = () => {
+  const generatePlantUML = (umlText) => {
     try {
-      const encodedDiagram = plantumlEncoder.encode(markdown);
-      const response = `http://www.plantuml.com/plantuml/svg/${encodedDiagram}`;
-      setUmlImage(response);
+      const encodedDiagram = plantumlEncoder.encode(umlText || markdown);
+      setUmlImage(`http://www.plantuml.com/plantuml/svg/${encodedDiagram}`);
     } catch (error) {
       console.error("Error generating PlantUML diagram", error);
     }
@@ -57,6 +63,7 @@ const PlantUMLEditor = () => {
   return (
     <div className="flex flex-col space-y-4 p-4">
       {/* Markdown Editor */}
+      <div><UploadImageSection onPlantUMLGenerated={handlePlantUMLGenerated} /></div>
       <div>
         <h2 className="text-lg font-semibold">PlantUML Editor</h2>
         <MDEditor
@@ -66,7 +73,7 @@ const PlantUMLEditor = () => {
           extraCommands={[commands.fullscreen]}
           onChange={(value) => {
             setMarkdown(value || "");
-            generatePlantUML(); // Live preview
+            generatePlantUML(value); // Live preview
           }}
         />
       </div>
@@ -85,7 +92,7 @@ const PlantUMLEditor = () => {
             </option>
           ))}
         </select>
-        <button className="p-2 bg-blue-500 text-white rounded" onClick={convertToCode}>
+        <button className="p-2 bg-blue-500 text-white rounded hover:bg-blue-400 cursor-pointer" onClick={convertToCode}>
           Convert to Code
         </button>
       </div>
