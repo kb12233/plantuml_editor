@@ -13,6 +13,7 @@ export default function UploadImageSection({ onPlantUMLGenerated }) {
 
   const greencolor = '#B6D9D7';
   const black = '#0d1117';
+  const grayish = '#303134';
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -61,11 +62,12 @@ export default function UploadImageSection({ onPlantUMLGenerated }) {
     <Container
       maxWidth="sx"
       sx={{
-        bgcolor: black,
+        bgcolor: grayish,
         borderRadius: '1vh',
         height: '50vh',
         flex: 1,
         marginTop: -1,
+        marginLeft: '2%',
         display: 'flex',
         position: 'relative',
         overflow: 'hidden',
