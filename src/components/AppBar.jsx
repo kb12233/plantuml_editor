@@ -12,7 +12,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { useMediaQuery } from '@mui/material';
 import Sidebar from './sidebar';
 import logoDark from '../assets/images/logo_dark.png';
-import UMLPopup from './Sample';
+import UMLPopup from './UmlPreview';
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
