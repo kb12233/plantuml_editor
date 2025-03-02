@@ -1,19 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-//import PlantUMLEditor from "./components/PlantUMLEditor";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/HomePage';
+import RegistrationPage from './components/RegistrationPage';
+import LoginPage from './components/LoginPage';
 
 const App = () => {
   return (
-    // <div className="p-4">
-      <div >
-      {/* <h1 className="text-xl font-bold">ClassyCode Prototype</h1> */}
-      {/* <PlantUMLEditor /> */}
-      <Homepage />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/register" element={<RegistrationPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
 };
 
-export default App
+export default App;

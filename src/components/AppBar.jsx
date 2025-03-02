@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
@@ -12,17 +13,24 @@ import Toolbar from '@mui/material/Toolbar';
 import { useMediaQuery } from '@mui/material';
 import Sidebar from './sidebar';
 import logoDark from '../assets/images/logo_dark.png';
-import UMLPopup from './UmlPreview';
 
 export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [category, setCategory] = React.useState('');
   const [isDrawerOpen, setDrawerOpen] = React.useState(false);
+  const navigate = useNavigate(); 
+
   const greencolor = '#B6D9D7';
   const isMobile = useMediaQuery('(max-width: 600px)');
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+
+  const handleSignOut = () => {
+    setAnchorEl(null);
+    navigate('/login'); 
+  };
+
   const handleCategoryChange = (event) => setCategory(event.target.value);
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
@@ -84,11 +92,8 @@ export default function MenuAppBar() {
             onClose={handleClose}
             sx={{ '.MuiPaper-root': { bgcolor: '#303134', color: greencolor } }}
           >
-            <MenuItem onClick={handleClose} sx={{ fontFamily: 'JetBrains Mono' }}>
-              Profile
-            </MenuItem>
-            <MenuItem onClick={handleClose} sx={{ fontFamily: 'JetBrains Mono' }}>
-              My account
+            <MenuItem onClick={handleSignOut} sx={{ fontFamily: 'JetBrains Mono' }}>
+              Sign-out
             </MenuItem>
           </Menu>
         </Toolbar>
