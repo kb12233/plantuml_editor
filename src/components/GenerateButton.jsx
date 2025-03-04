@@ -29,7 +29,7 @@ export default function GenerateCode({ onClick }) {
           width: "100%",
           maxWidth: "11000px",
         }}
-        onClick={onClick} // ✅ Trigger the function when clicked
+        onClick={onClick} 
       >
         GENERATE
       </Button>

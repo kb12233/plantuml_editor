@@ -34,7 +34,7 @@ export default function CodeGeneratedSection({ generatedCode }) {
           }}  />
         </Box>
       ) : (
-        <p style={{ color: "white" }}>Click "Generate" to see the code...</p>
+        <p style={{ color: "white", fontFamily: 'JetBrains Mono',}}>Click "Generate" to see the code...</p>
       )}
     </Container>
   );

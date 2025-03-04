@@ -34,15 +34,16 @@ const UMLPopup = ({ plantUMLCode }) => {
     <div>
       {/* Open modal button */}
       <button className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 mb-4" onClick={() => setIsOpen(true)}>
-  <CiChat2 size={32} className="text-gray-700" />
-</button>
-
+        <CiChat2 size={32} className="text-gray-700" />
+      </button>
 
       {/* UML Popup */}
       <Transition show={isOpen} as="div">
         <Dialog onClose={() => setIsOpen(false)} className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black bg-opacity-50"></div>
-          <div className="relative bg-white p-6 rounded-lg shadow-xl w-full max-w-3xl h-[80vh] flex flex-col">
+          <div className="fixed inset-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}></div>
+
+          {/* Click outside closes the pop-up */}
+          <Dialog.Panel className="relative bg-white p-6 rounded-lg shadow-xl w-full max-w-3xl h-[80vh] flex flex-col">
             {/* Close button */}
             <button
               onClick={() => setIsOpen(false)}
@@ -68,6 +69,7 @@ const UMLPopup = ({ plantUMLCode }) => {
             </div>
             
             <h2 className="text-lg font-semibold mb-4">Class Diagram Preview</h2>
+            
             {/* UML Preview */}
             <div className="border p-2 mt-4 bg-gray-50 rounded-md max-h-[50vh] overflow-hidden flex justify-center items-center">
               {umlImage ? (
@@ -75,20 +77,19 @@ const UMLPopup = ({ plantUMLCode }) => {
                   initialScale={1}
                   minScale={0.5}
                   maxScale={3}
-                  wheel={{ step: 0.2 }} // Scroll to zoom
-                  pinch={{ step: 0.2 }} // Pinch to zoom
-                  doubleClick={{ step: 1 }} // Double-click to zoom in
+                  wheel={{ step: 0.2 }}
+                  pinch={{ step: 0.2 }}
+                  doubleClick={{ step: 1 }}
                 >
                   <TransformComponent>
-                  <img src={umlImage} alt="PlantUML Diagram" className="w-full h-full object-contain" />
-
+                    <img src={umlImage} alt="PlantUML Diagram" className="w-full h-full object-contain" />
                   </TransformComponent>
                 </TransformWrapper>
               ) : (
                 <p>Generating UML diagram...</p>
               )}
             </div>
-          </div>
+          </Dialog.Panel>
         </Dialog>
       </Transition>
     </div>
