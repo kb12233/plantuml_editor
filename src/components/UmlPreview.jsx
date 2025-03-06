@@ -22,7 +22,6 @@ const UMLPopup = ({ plantUMLCode }) => {
     }
   };
 
-  // Update UML whenever plantUMLCode or markdown changes
   useEffect(() => {
     if (plantUMLCode) {
       setMarkdown(plantUMLCode);
@@ -42,8 +41,8 @@ const UMLPopup = ({ plantUMLCode }) => {
         <Dialog onClose={() => setIsOpen(false)} className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}></div>
 
-          {/* Click outside closes the pop-up */}
-          <Dialog.Panel className="relative bg-white p-6 rounded-lg shadow-xl w-full max-w-3xl h-[80vh] flex flex-col">
+          {/* Dialog Panel */}
+          <Dialog.Panel className="relative bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl h-[80vh] flex flex-col">
             {/* Close button */}
             <button
               onClick={() => setIsOpen(false)}
@@ -54,40 +53,42 @@ const UMLPopup = ({ plantUMLCode }) => {
 
             <h2 className="text-lg font-semibold mb-4">UML Diagram Editor</h2>
 
-            {/* Markdown Editor */}
-            <div className="flex-1 overflow-auto">
-              <MDEditor
-                value={markdown}
-                preview="edit"
-                commands={[]}
-                extraCommands={[commands.fullscreen]}
-                onChange={(value) => {
-                  setMarkdown(value || "");
-                  generatePlantUML(value);
-                }}
-              />
-            </div>
-            
-            <h2 className="text-lg font-semibold mb-4">Class Diagram Preview</h2>
-            
-            {/* UML Preview */}
-            <div className="border p-2 mt-4 bg-gray-50 rounded-md max-h-[50vh] overflow-hidden flex justify-center items-center">
-              {umlImage ? (
-                <TransformWrapper
-                  initialScale={1}
-                  minScale={0.5}
-                  maxScale={3}
-                  wheel={{ step: 0.2 }}
-                  pinch={{ step: 0.2 }}
-                  doubleClick={{ step: 1 }}
-                >
-                  <TransformComponent>
-                    <img src={umlImage} alt="PlantUML Diagram" className="w-full h-full object-contain" />
-                  </TransformComponent>
-                </TransformWrapper>
-              ) : (
-                <p>Generating UML diagram...</p>
-              )}
+            {/* Layout: Markdown Editor & UML Preview Side by Side */}
+            <div className="flex flex-row gap-4 h-full">
+
+            <div className="w-1/2 border p-2 bg-gray-50 rounded-md flex justify-center items-center overflow-hidden">
+                {umlImage ? (
+                  <TransformWrapper
+                    initialScale={1}
+                    minScale={0.5}
+                    maxScale={3}
+                    wheel={{ step: 0.2 }}
+                    pinch={{ step: 0.2 }}
+                    doubleClick={{ step: 1 }}
+                  >
+                    <TransformComponent>
+                      <img src={umlImage} alt="PlantUML Diagram" className="max-w-full h-auto" />
+                    </TransformComponent>
+                  </TransformWrapper>
+                ) : (
+                  <p className="text-gray-500">Generating UML diagram...</p>
+                )}
+              </div>
+              {/* Markdown Editor */}
+              <div className="w-1/2 border rounded-md overflow-auto">
+                <MDEditor
+                  value={markdown}
+                  preview="edit"
+                  commands={[]}
+                  extraCommands={[commands.fullscreen]}
+                  onChange={(value) => {
+                    setMarkdown(value || "");
+                    generatePlantUML(value);
+                  }}
+                />
+              </div>
+
+              {/* UML Preview */}
             </div>
           </Dialog.Panel>
         </Dialog>

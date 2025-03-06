@@ -20,17 +20,15 @@ export default function CodeGeneratedSection({ generatedCode }) {
         marginTop: -1,
       }}
     >
-      {/* <h2 style={{ color: 'white' }}>Generated Code ({language})</h2> */}
-
-      {/* Only show markdown if generatedCode exists */}
+    
       {generatedCode ? (
         <Box sx={{ height: '100%', overflowY: 'auto' }}>
           <MDEditor value={generatedCode} preview="preview"
            style={{
-            minHeight: "100%", // Ensure it matches container height
+            minHeight: "100%", 
             height: "100%", 
             width: "100%",
-            backgroundColor: "#303134", // Match dark theme
+            backgroundColor: "#303134", 
           }}  />
         </Box>
       ) : (
