@@ -6,6 +6,18 @@ import MDEditor, { commands } from "@uiw/react-md-editor";
 import plantumlEncoder from "plantuml-encoder";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
+const customStyles = `
+  .w-md-editor, .w-md-editor-text, .w-md-editor-preview, .w-md-editor-content, .w-md-editor-text-pre, .w-md-editor-text-pre code, .w-md-editor-text-input {
+    font-family: monospace !important;
+  }
+  .w-md-editor-text-input {
+    line-height: 1.5 !important; /* Improve readability */
+  }
+  .w-md-editor-preview {
+    line-height: 1.5 !important; /* Improve readability in preview */
+  }
+`;
+
 const UMLPopup = ({ plantUMLCode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [markdown, setMarkdown] = useState(plantUMLCode || "");
@@ -31,6 +43,9 @@ const UMLPopup = ({ plantUMLCode }) => {
 
   return (
     <div>
+       {/* Inject custom styles */}
+       <style>{customStyles}</style>
+
       {/* Open modal button */}
       <button className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 mb-4" onClick={() => setIsOpen(true)}>
         <CiChat2 size={32} className="text-gray-700" />
@@ -42,21 +57,38 @@ const UMLPopup = ({ plantUMLCode }) => {
           <div className="fixed inset-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}></div>
 
           {/* Dialog Panel */}
-          <Dialog.Panel className="relative bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl h-[80vh] flex flex-col">
+          <Dialog.Panel className="relative bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl h-[85vh] flex flex-col">
             {/* Close button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-2 right-2 p-2 text-gray-600 hover:text-gray-900"
+              className="absolute top-1 right-1 p-2 text-gray-600 hover:text-gray-900"
             >
               <XMarkIcon className="h-6 w-6" />
             </button>
 
-            <h2 className="text-lg font-semibold mb-4">UML Diagram Editor</h2>
-
             {/* Layout: Markdown Editor & UML Preview Side by Side */}
-            <div className="flex flex-row gap-4 h-full">
+            <div className="flex flex-row gap-5 h-full" style={{marginTop: "1rem"}}>
+              {/* Markdown Editor */}
+              <div className="flex-1 min-w-[0%] max-w-[50%] border rounded-md overflow-auto">
+                <MDEditor
+                  value={markdown}
+                  preview="edit"
+                  commands={[]}
+                  extraCommands={[commands.fullscreen]}
+                  onChange={(value) => {
+                    setMarkdown(value || "");
+                    generatePlantUML(value);
+                  }}
+                  height="100%" // Ensure editor takes full height
+                  style={{ 
+                    minHeight: "100%", 
+                    fontFamily: 'JetBrains Mono, monospace',
+                  }} // Ensure editor doesn't collapse
+                />
+              </div>
 
-            <div className="w-1/2 border p-2 bg-gray-50 rounded-md flex justify-center items-center overflow-hidden">
+              {/* UML Preview */}
+              <div className="flex-1 min-w-[50%] max-w-[60%] border p-2 bg-gray-50 rounded-md flex justify-center items-center overflow-hidden">
                 {umlImage ? (
                   <TransformWrapper
                     initialScale={1}
@@ -74,21 +106,6 @@ const UMLPopup = ({ plantUMLCode }) => {
                   <p className="text-gray-500">Generating UML diagram...</p>
                 )}
               </div>
-              {/* Markdown Editor */}
-              <div className="w-1/2 border rounded-md overflow-auto">
-                <MDEditor
-                  value={markdown}
-                  preview="edit"
-                  commands={[]}
-                  extraCommands={[commands.fullscreen]}
-                  onChange={(value) => {
-                    setMarkdown(value || "");
-                    generatePlantUML(value);
-                  }}
-                />
-              </div>
-
-              {/* UML Preview */}
             </div>
           </Dialog.Panel>
         </Dialog>

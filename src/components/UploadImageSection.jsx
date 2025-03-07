@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
+import { CircularProgress } from "@mui/material";
 import "@fontsource/jetbrains-mono";
 
 
@@ -121,7 +122,7 @@ export default function UploadImageSection({ setPlantUMLCode }) {
             <input type="file" accept="image/*" hidden onChange={handleImageUpload} />
           </Button>
 
-          {isProcessing && (
+          {/* {isProcessing && (
             <Typography
               sx={{
                 position: "absolute",
@@ -133,6 +134,35 @@ export default function UploadImageSection({ setPlantUMLCode }) {
             >
               Processing...
             </Typography>
+          )} */}
+        {isProcessing && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1, // Space between spinner and text
+                color: greencolor,
+              }}
+            >
+              <CircularProgress
+                sx={{ color: "black" }} // Use the custom greencolor
+                size={30}
+              />
+              <Typography
+                sx={{
+                  fontSize: "20px",
+                  fontFamily: "JetBrains Mono",
+                  color: "black",
+                }}
+              >
+                Processing...
+              </Typography>
+            </Box>
           )}
         </Box>
       ) : (
