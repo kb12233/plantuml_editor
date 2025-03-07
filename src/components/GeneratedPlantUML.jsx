@@ -1,9 +1,8 @@
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import plantumlEncoder from "plantuml-encoder";
 import { useEffect, useRef, useState } from "react";
-import UploadImageSection from "./UploadImageSection"; // Import the UploadImageSection component
 
-const PlantUMLEditor = () => {
+const GeneratedPlantUML = () => {
   const [markdown, setMarkdown] = useState(`@startuml\nAlice -> Bob: Hello\n@enduml`);
   const [umlImage, setUmlImage] = useState("");
   const [generatedCode, setGeneratedCode] = useState(""); // Stores the generated code
@@ -12,7 +11,7 @@ const PlantUMLEditor = () => {
 
   // List of supported languages by PlantCode
   const supportedLanguages = [
-    "coffeescript", "csharp", "ecmascript5", "ecmascript6", 
+    "coffeescript", "csharp", "ecmascript5", "ecmascript6",
     "java", "php", "python", "ruby", "typescript",
     "swift", "kotlin"
   ];
@@ -62,22 +61,6 @@ const PlantUMLEditor = () => {
 
   return (
     <div className="flex flex-col space-y-4 p-4">
-      {/* Markdown Editor */}
-      <div><UploadImageSection onPlantUMLGenerated={handlePlantUMLGenerated} /></div>
-      <div>
-        <h2 className="text-lg font-semibold">PlantUML Editor</h2>
-        <MDEditor
-          value={markdown}
-          preview="edit"
-          commands={[]}
-          extraCommands={[commands.fullscreen]}
-          onChange={(value) => {
-            setMarkdown(value || "");
-            generatePlantUML(value); // Live preview
-          }}
-        />
-      </div>
-
       {/* Language Selection & Convert Button */}
       <div className="flex space-x-4 items-center">
         <label className="font-semibold">Select Language:</label>
@@ -112,4 +95,4 @@ const PlantUMLEditor = () => {
   );
 };
 
-export default PlantUMLEditor;
+export default GeneratedPlantUML;
