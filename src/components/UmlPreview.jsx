@@ -5,10 +5,12 @@ import { CiChat2 } from "react-icons/ci";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import plantumlEncoder from "plantuml-encoder";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { useAtom } from "jotai";
+import { plantUmlCodeAtom } from "../atoms";
 
 const UMLPopup = ({ plantUMLCode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [markdown, setMarkdown] = useState(plantUMLCode || "");
+  const [markdown, setMarkdown] = useAtom(plantUmlCodeAtom);
   const [umlImage, setUmlImage] = useState("");
 
   // Generate UML Diagram

@@ -8,9 +8,11 @@ import { Typography } from "@mui/material";
 import MenuAppBar from "./AppBar";
 import SelectLanguage from "./SelectLanguage";
 import UMLPopup from "./UmlPreview";
+import { useAtom } from "jotai";
+import { plantUmlCodeAtom } from "../atoms";
 
 export default function Homepage() {
-  const [plantUMLCode, setPlantUMLCode] = React.useState(""); // Store UML Code
+  const [plantUMLCode, setPlantUMLCode] = useAtom(plantUmlCodeAtom); // Store UML Code
   const [language, setLanguage] = React.useState("java"); // Default language
   const [generatedCode, setGeneratedCode] = React.useState(""); // Store generated code
 
