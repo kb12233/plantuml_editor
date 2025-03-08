@@ -28,7 +28,7 @@ export default function MenuAppBar() {
 
   const handleSignOut = () => {
     setAnchorEl(null);
-    navigate('/login'); 
+    navigate('/'); 
   };
 
   const handleCategoryChange = (event) => setCategory(event.target.value);
