@@ -8,9 +8,9 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useAtom } from "jotai";
 import { plantUmlCodeAtom } from "../atoms";
 
-const UMLPopup = ({ plantUMLCode }) => {
+const UMLPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [markdown, setMarkdown] = useAtom(plantUmlCodeAtom);
+  const [plantUMLCode, setPlantUMLCode] = useAtom(plantUmlCodeAtom);
   const [umlImage, setUmlImage] = useState("");
 
   // Generate UML Diagram
@@ -26,7 +26,7 @@ const UMLPopup = ({ plantUMLCode }) => {
 
   useEffect(() => {
     if (plantUMLCode) {
-      setMarkdown(plantUMLCode);
+      setPlantUMLCode(plantUMLCode);
       generatePlantUML(plantUMLCode);
     }
   }, [plantUMLCode]);
@@ -79,12 +79,12 @@ const UMLPopup = ({ plantUMLCode }) => {
               {/* Markdown Editor */}
               <div className="w-1/2 border rounded-md overflow-auto">
                 <MDEditor
-                  value={markdown}
+                  value={plantUMLCode}
                   preview="edit"
                   commands={[]}
                   extraCommands={[commands.fullscreen]}
                   onChange={(value) => {
-                    setMarkdown(value || "");
+                    setPlantUMLCode(value || "");
                     generatePlantUML(value);
                   }}
                 />
